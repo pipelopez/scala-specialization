@@ -51,5 +51,48 @@ object MathematicalOperations:
     loop(1, n)
 
 
-  @main def testFactorial = println(factorial(4))
+  @main def testFactorial = println(factorial(3))
   @main def testFactorialRec = println(factorial(10))
+
+  /**
+   * Sum the integers between two numbers
+   * @param a the first number
+   * @param b the second number
+   * @return the numbers between them
+   * */
+  def numsBetween(a: Int, b: Int): Int =
+    if a > b then 0 else a + numsBetween(a + 1, b)
+
+  @main def testNumsBetween = println(numsBetween(1,4))
+
+  /**
+   * Cube of number
+   * @param x the number to multiply
+   * @return the cube for the given number
+   * */
+  def cube(x: Int): Int = x * x * x
+
+  @main def testCube = println(cube(3))
+
+  /**
+   * Sum cubes between to numbers
+   * @param a the first number
+   * @param b the second number
+   * @return the sum of the cubes between them
+   * */
+  def sumCubes(a: Int, b: Int): Int =
+    if a > b then 0 else cube(a) + sumCubes(a + 1, b)
+
+  @main def testSumCubes = print(sumCubes(1,4))
+
+
+  /**
+   * Sum factorials between two numbers
+   * @param a the first number
+   * @param b the second number
+   * @return the sum of the factorials of numbers between them
+   * */
+  def sumFactorials(a: Int, b: Int): Int =
+    if a > b then 0 else factorial(a) + sumFactorials(a + 1, b)
+
+  @main def testSumFactorials = println(sumFactorials(1, 2))
