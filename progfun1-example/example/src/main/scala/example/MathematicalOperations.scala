@@ -96,3 +96,43 @@ object MathematicalOperations:
     if a > b then 0 else factorial(a) + sumFactorials(a + 1, b)
 
   @main def testSumFactorials = println(sumFactorials(1, 2))
+
+  /**
+   * responde si un número es primo, es decir, es divisible solo por 1 y por el mismo
+   * @param n es el número a ananlizar
+   * @return si es o no primo
+   * */
+  def isPrime(n: Int): Boolean = (2 until n).forall(n % _ != 0)
+
+  @main def testIsPrime = println(isPrime(2))
+
+class Polynom(nonZeroTerms: Map[Int, Double]):
+  def this(bindings: (Int, Double)*) = this(bindings.toMap)
+
+  val terms = nonZeroTerms.withDefaultValue(0.0)
+
+//  def + (other: Polynom): Polynom =
+//    Polynom(terms ++ other.terms.map((exp, coeff) => (exp, terms(exp) + coeff)))
+
+  def + (other: Polynom): Polynom =
+    Polynom(other.terms.foldLeft(terms)(addTerm))
+
+  def addTerm(terms: Map[Int, Double], term: (Int, Double)): Map[Int, Double] =
+    val (exp, coeff) = term
+    terms + (exp -> (terms(exp) + coeff))
+
+  override def toString: String =
+    val termStrings =
+      for (exp, coeff) <- terms.toList.sorted.reverse
+        yield
+          val exponent = if exp == 0 then "" else s"x^$exp"
+          s"$coeff$exponent"
+    if terms.isEmpty then "0"
+    else termStrings.mkString("+")
+
+val polynom1 = Polynom(0 -> 2, 1 -> -3, 2 -> 1)
+val polynom2 = Polynom(Map())
+
+@main def testSumPolynom = println(polynom1 + polynom1 + polynom2)
+
+
